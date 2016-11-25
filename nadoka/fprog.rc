@@ -1,0 +1,78 @@
+# -*- ruby; coding: utf-8 -*-
+class NADOKA_Config < Nadoka::NDK_ConfigBase
+  nadoka_home = '/vagrant/nadoka'
+  Client_server_port = nil
+  Servers = [
+    {
+      :host => File.read("#{nadoka_home}/config/host").chomp,
+      :port => File.read("#{nadoka_home}/config/port").to_i,
+      :pass => File.read("#{nadoka_home}/config/pass").chomp,
+      :ssl_params => {},
+    },
+  ]
+
+  Hostname = Socket.gethostname
+  number = Hostname[/\d+/].to_i
+  delay = number.to_f
+  delay /= 10.0 while delay > 10.0
+
+  User     = Hostname
+  Nick     = Hostname
+
+  Channel_info = {
+    '#servers' => {
+      :key => File.read("#{nadoka_home}/config/key").chomp,
+    },
+  }
+
+  require 'tmpdir'
+  Log_dir     = "#{Dir.tmpdir}/nadoka/log"
+
+  Plugins_dir = [
+    "#{nadoka_home}/wc/fprog-nadoka-plugins-trunk",
+    "#{nadoka_home}/wc/nadoka/plugins",
+  ]
+
+  BotConfig << {
+    :name => :Ponger,
+    :ch => /servers/,
+    :pattern => /\Ap[io]ng.?\z/,
+    :reply => "pong #{number}",
+    :delay => delay,
+  }
+
+  BotConfig << {
+    :name => :Upgradable,
+    :bot_name => "upgradable #{number}",
+    :ch => /servers/,
+    :pattern => /\Aupgradable\z/,
+    :delay => delay,
+  }
+
+  if File.executable?('/usr/lib/update-notifier/update-motd-reboot-required')
+    BotConfig << {
+      :name => :CatBot,
+      :ch => /servers/,
+      :pattern => /\Aupgradable\z/,
+      :file => "|/usr/lib/update-notifier/update-motd-reboot-required",
+      :delay => delay,
+    }
+  end
+
+  BotConfig << {
+    :name => :CatBot,
+    :ch => /servers/,
+    :pattern => /\Auptime\z/,
+    :file => "|uptime",
+    :delay => delay,
+  }
+
+  BotConfig << {
+    :name => :DumbBot,
+    :channels => %w"#servers",
+    :unixserverpath => File.expand_path("#{Dir.tmpdir}/nadoka/fprog-servers.sock"),
+    :nkf => '-Wwm0',
+    :chmod => 0700,
+  }
+end
+# vim: set ft=ruby:
