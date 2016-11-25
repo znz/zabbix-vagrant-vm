@@ -39,6 +39,7 @@ $UFW allow out 465,587,993,995/tcp
 $UFW allow out 2401,3690,9418/tcp
 $UFW allow out 6667,6697/tcp
 $UFW allow out 8080/tcp
+$UFW allow out 10050/tcp
 $UFW allow out 11371/tcp
 
 $UFW allow 22/tcp; $UFW limit 22/tcp
