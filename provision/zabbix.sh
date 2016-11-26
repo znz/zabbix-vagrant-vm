@@ -72,3 +72,7 @@ ln -snf /usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc /usr/share/zabbix
 apt-get install -y jq
 install -D /vagrant/provision/sslnotafter.rb /etc/zabbix/externalscripts/sslnotafter.rb
 etckeeper commit 'Add externalscripts of zabbix' || :
+
+install /vagrant/nadoka/notice.rb /etc/zabbix/alert.d/notice.rb
+install -m644 /vagrant/nadoka/sudoers /etc/sudoers.d/nadoka
+etckeeper commit 'Add alert script of zabbix' || :

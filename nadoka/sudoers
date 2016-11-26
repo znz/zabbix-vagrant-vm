@@ -1,0 +1,1 @@
+zabbix ALL = (vagrant) NOPASSWD: /etc/zabbix/alert.d/notice.rb
