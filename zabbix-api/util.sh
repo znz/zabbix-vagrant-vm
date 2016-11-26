@@ -193,6 +193,8 @@ trigger_get_id_of_cert () {
     day=31
     trigger_get_id "$protocol Cert is about to expire on {HOST.NAME} ($day days)" "{0 My Template App $protocol Certificate:sslnotafter.rb[\"{HOST.CONN}\",$port].last(0)}<$((86400*$day))" 1
     triggerids+=($ID)
+    trigger_get_id "$protocol Cert is renewal on {HOST.NAME}" "{0 My Template App $protocol Certificate:sslnotafter.rb[\"{HOST.CONN}\",$port].change(0)}>0" 1
+    triggerids+=($ID)
 }
 
 # host
