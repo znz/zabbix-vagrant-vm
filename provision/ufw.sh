@@ -36,6 +36,7 @@ $UFW allow out 53
 $UFW allow out 80,443/tcp
 $UFW allow out 123/udp
 $UFW allow out 465,587,993,995/tcp
+$UFW allow out 636/tcp
 $UFW allow out 2401,3690,9418/tcp
 $UFW allow out 6667,6697/tcp
 $UFW allow out 8080/tcp
