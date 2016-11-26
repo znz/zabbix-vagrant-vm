@@ -76,3 +76,6 @@ etckeeper commit 'Add externalscripts of zabbix' || :
 install /vagrant/nadoka/notice.rb /etc/zabbix/alert.d/notice.rb
 install -m644 /vagrant/nadoka/sudoers /etc/sudoers.d/nadoka
 etckeeper commit 'Add alert script of zabbix' || :
+
+install /vagrant/provision/local-zabbix-dump /etc/cron.daily/local-zabbix-dump
+etckeeper commit 'Add backup script' || :
