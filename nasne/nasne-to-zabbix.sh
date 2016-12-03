@@ -52,7 +52,7 @@ if [ "$rec" -eq 1 ]; then
     startDateTime=$(echo "$JSON" | jq -r '.channel.startDateTime')
     title=$(echo "$JSON" | jq -r '.channel.title')
     channel=$(echo "$JSON" | jq -r '.channel.service.serviceName')
-    description=$(echo "$JSON" | jq -r '.channel.description')
+    description=$(echo "$JSON" | jq -r '.channel.description' | tr $'\n' ' ')
     new_rec_log="$startDateTime $title ($channel) $description"
     if [ -f "$REC_LOG_FILE" ]; then
         old_rec_log=$(cat "$REC_LOG_FILE")
