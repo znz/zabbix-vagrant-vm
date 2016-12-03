@@ -170,6 +170,8 @@ trigger_get_id () {
     if [ -z "$triggerid" ]; then
 	zabbix_api trigger.create '{"description":"'"$description"'","expression":"'"$expression"'","priority":'"$priority"'}'
 	triggerid=$(echo "$JSON" | jq -r '.result.triggerids[]')
+    else
+	zabbix_api trigger.update '{"triggerid":"'"$triggerid"'","expression":"'"$expression"'","priority":'"$priority"'}'
     fi
     debug "$description triggerid: $triggerid"
     ID=$triggerid
